@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <readline/readline.h>
 
 
 
@@ -23,7 +24,7 @@
         tokenized = strtok(NULL, " ");
     }
 
-    command[i] = NULL;
+    command[i] = NULL;  
     
     return command;
 
@@ -35,32 +36,37 @@ int main() {
     char *input;
     char **command;
     int result;
-   
+    pid_t pidDoFilho;
+    int status;
     
     while(1) {
-        input = malloc(32 * sizeof(char));
-        scanf("%[^\n]", input);
-
+        //input = malloc(32 * sizeof(char));
+        //scanf("%[^\n]", input);
+        input = readline("mac422shell> ")
         command = parser(input);        
 
-        if (strcmp(command[0], "protegepracaramba") == 0) {
-            result = chmod(command[1], 0000);
-        }
 
-        else {
-            if (strcmp(command[0], "liberageral") == 0) {
+        pidDoFilho = fork();
+        if(pidDoFilho == 0){
+
+            if (strcmp(command[0], "protegepracaramba") == 0) {
+                result = chmod(command[1], 0000);
+                exit(result);
+            }
+
+            else if (strcmp(command[0], "liberageral") == 0)  {
                 result = chmod(command[1], 0777);
+                exit(result);
             }
 
-            else {
-                if (1) {
-
-                }
-
-                else {
-
-                }
+            else{
+                execve(command[0], command);
+                printf("execvp nao funcionou!\n");
+                exit(0);
             }
+        }
+        else{
+            waidpid()
         }
 
         free(command);
