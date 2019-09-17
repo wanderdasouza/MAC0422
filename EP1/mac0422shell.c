@@ -36,7 +36,7 @@ char **isolateCommand(char **command) {
     char **isolated;
     int i;
 
-    i = 2;
+    i = 1;
     isolated = malloc(32 * sizeof(char *));
     while (command[i] != NULL) {
         isolated[i-1] = command[i];
@@ -57,11 +57,10 @@ int main(int argc, char *argv[]) {
     int result;
     pid_t pidDoFilho;
     int status;
-    int i = 0;
     
     while(1) {
         input = malloc(32 * sizeof(char));
-        printf("mac422shell> ");
+        printf("mac422shell>");
         fgets(input, 32*sizeof(char), stdin);
         input = strtok(input, "\n");
 
@@ -105,9 +104,13 @@ int main(int argc, char *argv[]) {
                 tabela de processos, evitando com que o numero de processos da tabela fique muito grande
                 */
             }
-            else waitpid(pidDoFilho, &status, WUNTRACED);
+            else{
+                waitpid(pidDoFilho, &status, WUNTRACED);
+                if (strcmp(command[0], "rodeveja") == 0){
+                    printf("programa `%s` retornou com codigo %d\n", command[1], status);
+                    } 
+            }
         }
-        i = i + 1;
         free(command);
         free(input);
     }
