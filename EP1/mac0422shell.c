@@ -30,6 +30,23 @@
 
 }
 
+char **isolateCommand(char **command) {
+
+    char **isolated;
+    int i;
+
+    i = 1;
+    isolated = malloc(32 * sizeof(char *));
+    while (command[i] != NULL) {
+        isolated[i-1] = command[i];
+        i++;
+    }
+
+    isolated[i] = NULL;
+
+    return isolated;
+}
+
 
 int main() {
 
@@ -41,6 +58,7 @@ int main() {
     
     while(1) {
         input = malloc(32 * sizeof(char));
+        printf("mac422shell> ");
         scanf("%[^\n]", input); 
         /*
         input = readline("mac422shell> ") 
