@@ -1,5 +1,5 @@
 #include <signal.h>
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -31,19 +31,42 @@
 
 }
 
+char **isolateCommand(char **command) {
+
+    char **isolated;
+    int i;
+
+    i = 2;
+    isolated = malloc(32 * sizeof(char *));
+    while (command[i] != NULL) {
+        isolated[i-1] = command[i];
+        i++;
+    }
+
+    isolated[i] = NULL;
+
+    return isolated;
+}
+
 
 int main(int argc, char *argv[]) {
 
     char *input;
+    char **isolated;
     char **command;
     int result;
     pid_t pidDoFilho;
     int status;
+    int i = 0;
     
     while(1) {
         input = malloc(32 * sizeof(char));
-        scanf("%[^\n]", input); 
+        printf("mac422shell> ");
+        fgets(input, 32*sizeof(char), stdin);
+        input = strtok(input, "\n");
+
         /*
+        scanf("%[^\n]", input); 
         input = readline("mac422shell> ") 
         */
         command = parser(input);        
@@ -63,8 +86,10 @@ int main(int argc, char *argv[]) {
             }
 
             else if (strcmp(command[0], "rodeveja") == 0) {
-                result = execve(command[0], command);
-                printf("execvp nao funcionou!\n"); 
+                isolated = isolateCommand(command);
+                result = execve(command[1], isolated, 0);
+                printf("execve nao funcionou!\n"); 
+                
                 /*
                 nao funcionou ja que essa linha nao sera executada caso o exec
                 seja bem sucedido 
@@ -82,7 +107,7 @@ int main(int argc, char *argv[]) {
             }
             else waitpid(pidDoFilho, &status, WUNTRACED);
         }
-
+        i = i + 1;
         free(command);
         free(input);
     }
