@@ -66,13 +66,11 @@ int main() {
             }
         }
         else{
-            waidpid()
+            waidpid(pidDoFilho, &status, WUNTRACED);
         }
 
         free(command);
         free(input);
-
-        return 0;
     }
     
     return 0;
