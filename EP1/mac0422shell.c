@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
-#include <readline/readline.h>
+
 
 
 
@@ -40,9 +40,11 @@ int main() {
     int status;
     
     while(1) {
-        //input = malloc(32 * sizeof(char));
-        //scanf("%[^\n]", input);
-        input = readline("mac422shell> ")
+        input = malloc(32 * sizeof(char));
+        scanf("%[^\n]", input); 
+        /*
+        input = readline("mac422shell> ") 
+        */
         command = parser(input);        
 
 
@@ -66,7 +68,7 @@ int main() {
             }
         }
         else{
-            waidpid(pidDoFilho, &status, WUNTRACED);
+            waitpid(pidDoFilho, &status, WUNTRACED);
         }
 
         free(command);
