@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 
 
@@ -31,7 +32,7 @@
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
 
     char *input;
     char **command;
@@ -53,22 +54,33 @@ int main() {
 
             if (strcmp(command[0], "protegepracaramba") == 0) {
                 result = chmod(command[1], 0000);
-                exit(result);
+                _exit(result);
             }
 
             else if (strcmp(command[0], "liberageral") == 0)  {
                 result = chmod(command[1], 0777);
-                exit(result);
+                _exit(result);
             }
 
-            else{
-                execve(command[0], command);
-                printf("execvp nao funcionou!\n");
-                exit(0);
+            else if (strcmp(command[0], "rodeveja") == 0) {
+                result = execve(command[0], command);
+                printf("execvp nao funcionou!\n"); 
+                /*
+                nao funcionou ja que essa linha nao sera executada caso o exec
+                seja bem sucedido 
+                */
+                _exit(result);
             }
         }
         else{
-            waitpid(pidDoFilho, &status, WUNTRACED);
+            if (strcmp(command[0], "rode") == 0){
+                signal(SIGCHLD, SIG_IGN); 
+                /*
+                este signal faz com que os processos defuntos sejam limpos da
+                tabela de processos, evitando com que o numero de processos da tabela fique muito grande
+                */
+            }
+            else waitpid(pidDoFilho, &status, WUNTRACED);
         }
 
         free(command);
