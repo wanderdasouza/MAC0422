@@ -95,6 +95,13 @@ int main(int argc, char *argv[]) {
                 */
                 _exit(result);
             }
+            else if (strcmp(command[0], "rode") == 0) {
+                close(STDIN_FILENO);
+                isolated = isolateCommand(command);
+                result = execve(command[1], isolated, 0);
+                printf("execve nao funcionou!\n"); 
+                _exit(result);
+            }
         }
         else{
             if (strcmp(command[0], "rode") == 0){
@@ -114,6 +121,5 @@ int main(int argc, char *argv[]) {
         free(command);
         free(input);
     }
-    
     return 0;
 }
