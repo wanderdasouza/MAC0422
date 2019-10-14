@@ -37,6 +37,15 @@
 #include "proc.h"
 
 /* Default handler for unused kernel calls. */
+
+/*######################################*/
+
+_PROTOTYPE(int do_callbatch, (message *m_ptr));
+
+/*chama a systemtask callbatch*/
+
+/*######################################*/
+
 _PROTOTYPE( int do_unused, (message *m_ptr) );
 
 _PROTOTYPE( int do_exec, (message *m_ptr) );		

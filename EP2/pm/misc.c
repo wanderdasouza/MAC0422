@@ -1,6 +1,6 @@
 /* Miscellaneous system calls.				Author: Kees J. Bot
  *								31 Mar 2000
- * The entry points into this file are:
+ * The entry points into this file are: 
  *   do_reboot: kill all processes, then reboot system
  *   do_procstat: request process status  (Jorrit N. Herder)
  *   do_getsysinfo: request copy of PM data structure  (Jorrit N. Herder)
@@ -32,6 +32,14 @@
 /* ######################################################## */
 PUBLIC int do_batch(pid_t pid)
 {
+	int rmp;
+
+	for (rmp = 0; rmp < NR_PROCS; rmp++)
+		if (mproc[rmp].mp_pid == mp_pid)
+			break;
+  /*rmp sera um ponteiro/indice apontando para o processo */
+  
+  systemTask(int *rmp)
   /*codigo da chamada*/
 }
 
