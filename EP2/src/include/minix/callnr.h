@@ -60,6 +60,11 @@
 #define REVIVE	 	  67	/* to FS: revive a sleeping process */
 #define TASK_REPLY	  68	/* to FS: reply code from tty task */
 
+/* ######################################################## */
+#define BATCH 69
+/* ######################################################## */
+
+
 /* Posix signal handling. */
 #define SIGACTION	  71
 #define SIGSUSPEND	  72
@@ -88,6 +93,3 @@
 #define SETEGID		  92	/* to PM */
 #define TRUNCATE	  93	/* to FS */
 #define FTRUNCATE	  94	/* to FS */
-/* ######################################################## */
-#define BATCH 95
-/* ######################################################## */
