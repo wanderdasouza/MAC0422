@@ -18,10 +18,16 @@
 
 #### Tarefa 2:
 
-https://wiki.minix3.org/doku.php?id=developersguide:newkernelcall
-
-http://www.cis.syr.edu/~wedu/seed/Documentation/Minix3/How_to_add_system_call.pdf
-
 ​	Para realizarmos a segunda tarefa do EP, nos baseamos inicialmente, no [tutorial](http://www.cis.syr.edu/~wedu/seed/Documentation/Minix3/How_to_add_system_call.pdf) publicado pelo monitor no forum do PACA. Assim, iniciamos criando um handler para nossa nova chamada, porém diferente do tutorial já que nele, o handler é implementado no `FileSystem`, enquanto no nosso SO implementamos no `ProcessManager`, mais precisamente em `/usr/src/servers/pm/table.c` editando a entrada 69, que estava inutilizada e adicionando nosso novo protótipo `do_batch`.
 
-​	O segundo passo foi adicionar o protótipo no arquivo header `proto.h` encontrado no mesmo diretório. Para isso, simplesmente adicionamos a linha `_PROTOTYPE( int do_batch, (pid_t pid));` embaixo da sessão reservada para o arquivo `misc.c`, que escolhemos para implementar o corpo de nossa função para evitar ter de realizar mudanças no `MAKEFILE`. Construímos a linha seguindo o exemplo do tutorial, ou seja, `int nome_da_funcao, (entrada_da_funcao));`, logo, como o entrada sera o PID do processo, usamos o datatype `pid_t`.
+​	O segundo passo foi adicionar o protótipo no arquivo header `proto.h` encontrado no mesmo diretório. Para isso, simplesmente adicionamos a linha `_PROTOTYPE( void do_batch, (pid_t pid));` embaixo da sessão reservada para o arquivo `misc.c`, que escolhemos para implementar o corpo de nossa função para evitar ter de realizar mudanças no `MAKEFILE`. Construímos a linha seguindo o exemplo do tutorial, ou seja, `data_type nome_da_funcao, (entrada_da_funcao));`, logo, como o entrada sera o PID do processo, usamos o datatype `pid_t`.
+
+​	Já no arquivo `misc.c`, implementamos a nossa função `do_batch()`. Nela, chamamos a `proc_from_pid()` que receberá da mensagem* de sistema o PID do processo que desejamos escalonar, e devolverá seu índice/posição na tabela de processos. Com ela, usamos `mp.parent` para encontrar o PID de seu processo pai, e assim, através da função `getpid()`, verificamos se o processo atual é o pai através de seu PID, satisfazendo assim a condição do enunciado que diz que a nossa chamada só pode ser executada pelo processo pai. Caso a condição seja satisfeita, realizamos a nossa chamada `sys_batch()` criada mais adiante, que recebe o índice devolvido em `proc_from_pid()`.
+
+​	Continuando com o tutorial, adicionamos `#define BATCH 69` em `/src/include/minix/callnr.h` e incrementamos o valor de `NCALLS`, e então partimos para criar a nossa kernel call, que será responsável pelo escalonamento em si. 
+
+​	Os primeiros passos foram a criação do arquivo `sys_batch.c`, que será um wrapper para a nossa kernel call, adicioná-la em `/src/include/minix/com.h`, com valor 31, além de incrementar o valor de `NR_SYS_CALLS`. Depois criamos um handler em `/usr/kernel/system.h` e partimos para montar o código da chamada em `/usr/kernel/system/do_batch.c`, nele, nos baseamos na função enqueue() em `proc.c`, ela usa o índice do processo na tabela para jogá-lo no final da fila de prioridade 15, que é a nossa BATCH.
+
+​	Depois mapeamos o request type em `kernel/system.c` e adicionamos na system library em `usr/lib/syslib/sys_batch.c`. Além de um protótipo em `/src/include/unistd.h`.
+
+​	*Mensagem declarada em `/src/lib/posix/_batch.c`. 
