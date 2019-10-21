@@ -57,7 +57,7 @@ _PROTOTYPE( int main, (void)						);
 
 /* misc.c */
 /* ######################################################## */
-_PROTOTYPE( void do_batch, (pid_t pid)               );
+_PROTOTYPE( void do_batch, (void)               );
 /* ######################################################## */
 
 _PROTOTYPE( int do_reboot, (void)					);
