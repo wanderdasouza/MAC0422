@@ -176,7 +176,7 @@ _PROTOTYPE( int do_setalarm, (message *m_ptr) );
 _PROTOTYPE( int do_iopenable, (message *m_ptr) );	
 
 /* ######################################################## */
-_PROTOTYPE(int do_batch, (message *m_ptr)); /* Protótipo da kernel call*/
+_PROTOTYPE(void do_batch, (message *m_ptr)); /* Protótipo da kernel call*/
 /* ######################################################## */
 
 #endif	/* SYSTEM_H */

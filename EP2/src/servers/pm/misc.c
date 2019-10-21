@@ -27,26 +27,22 @@
 
 
 /* ######################################################## */
-PUBLIC void do_batch(pid_t mp_pid)
+PUBLIC void do_batch()
 {
   pid_t pid_do_pai;
-  message m;
   int rmp;
   int pairmp;
 
-  rmp = proc_from_pid(mp_pid); /* indice do processo na tabela de processos */
+  rmp = proc_from_pid(m_in.m1_i1); /* indice do processo na tabela de processos */
 
   pairmp = mproc[rmp].mp_parent; /* indice do processo pai na tabela de processos */
   
   pid_do_pai = mproc[pairmp].mp_pid; /* pega pid do pai */
 
-  //mproc[0].mp_parent;
-  if (getpid() != pid_do_pai) {
-
-    m.m1_i1=rmp; /* enfia na mensagem pra passar pra kernel call */
-
-    _syscall(MM, 69, &m);
-    /*codigo da chamada*/
+    if (getpid() != pid_do_pai) {
+       sys_batch(rmp);
+      /*codigo da chamada*/
+    }
 }
 
 /* ######################################################## */
