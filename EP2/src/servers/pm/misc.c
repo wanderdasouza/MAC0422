@@ -43,6 +43,9 @@ PUBLIC void do_batch()
        sys_batch(rmp);
       /*codigo da chamada*/
     }
+    else {
+        printf("Não é o pai\n");
+    }
 }
 
 /* ######################################################## */
