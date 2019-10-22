@@ -32,6 +32,8 @@
 
 ​	Depois mapeamos o request type em `kernel/system.c` e adicionamos na system library em `usr/lib/syslib/sys_batch.c`. Além de um protótipo em `/src/include/unistd.h` e editamos os devidos Makefiles, porém, não conseguimos demarcar com comentários as linhas que adicionamos, pois estavam causando problemas na hora de compilar os arquivos.
 
+#### Problemas encontrados:	
+
 ​	Porém mesmo após fazer tudo isso, nosso minix ainda apresentava problemas na hora de realizar a system call, ao compilarmos e rodarmos o SO, ele não reconhecia a call batch(pid), apenas a do_batch(pid), que ao ser executada, por alguma razão nada acontecia e o Minix travava por completo. Passamos horas tentando resolver o que estava errado, mas ainda assim não conseguimos identificar a raiz do problema. 
 
 ​	Estando nessa situação complicada, acabamos deixando de implementar a unbatch(pid), já que a lógica de sua implementação seria muito similar, quase idêntica à da tarefa 3, e portanto, tentar criá-la sem ter conseguido a sua irmã seria um desperdício de tempo e esforço, já que apenas criaria problemas adicionais. Porém, ainda decidimos enviar o EP, já que acreditamos que nosso esforço possa valer alguma coisa, além de que precisamos de feedback para que possamos realizar os devidos ajustes e podermos fazer os próximos EPs de maneira mais adequada.
