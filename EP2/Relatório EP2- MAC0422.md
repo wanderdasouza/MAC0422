@@ -28,6 +28,6 @@
 
 ​	Os primeiros passos foram a criação do arquivo `sys_batch.c`, que será um wrapper para a nossa kernel call, adicioná-la em `/src/include/minix/com.h`, com valor 31, além de incrementar o valor de `NR_SYS_CALLS`. Depois criamos um handler em `/usr/kernel/system.h` e partimos para montar o código da chamada em `/usr/kernel/system/do_batch.c`, nele, nos baseamos na função enqueue() em `proc.c`, ela usa o índice do processo na tabela para jogá-lo no final da fila de prioridade 15, que é a nossa BATCH.
 
-​	Depois mapeamos o request type em `kernel/system.c` e adicionamos na system library em `usr/lib/syslib/sys_batch.c`. Além de um protótipo em `/src/include/unistd.h`.
+​	Depois mapeamos o request type em `kernel/system.c` e adicionamos na system library em `usr/lib/syslib/sys_batch.c`. Além de um protótipo em `/src/include/unistd.h` e editamos os devidos Makefiles, porém, não conseguimos demarcar com comentários as linhas que adicionamos, pois estavam causando problemas na hora de compilar os arquivos.
 
 ​	*Mensagem declarada em `/src/lib/posix/_batch.c`. 
