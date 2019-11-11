@@ -9,7 +9,7 @@ struct memory;
 
 /* alloc.c */
 /*#########################################*/
-_PROTOTYPE( void memalloc (int));
+_PROTOTYPE( void do_memalloc, (void));
 /*#########################################*/
 _PROTOTYPE( phys_clicks alloc_mem, (phys_clicks clicks)			);
 _PROTOTYPE( void free_mem, (phys_clicks base, phys_clicks clicks)	);

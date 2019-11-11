@@ -95,14 +95,14 @@ phys_clicks clicks;		/* amount of memory requested */
 			/* Return the start address of the acquired block. */
 			return(old_base);
 		}
-    else if (mode == 1 && hp_len >= clicks) {
+    else if (mode == 1 && hp->h_len >= clicks) {
       if(hp->h_len > maiorlacuna->h_len) maiorlacuna = hp;
     }
 		prev_ptr = hp;
 		hp = hp->h_next;
 	}
   if(mode == 1){
-    if maiorlacuna-> h_len < clicks break;
+    if (maiorlacuna->h_len < clicks) break;
     hp = maiorlacuna;
     old_base = hp->h_base;	/* remember where it started */
     hp->h_base += clicks;	/* bite a piece off */
