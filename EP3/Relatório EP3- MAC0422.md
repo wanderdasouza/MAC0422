@@ -1,0 +1,23 @@
+# Relatório EP3- MAC0422
+
+###### Thiago Santos Teixeira -nUSP 10736987
+
+###### Wander Souza - nUSP 10737011
+
+### 
+
+#### Primeira Parte:
+
+​	Para a primeira parte do EP, tivemos que criar uma nova `system call` que alterasse a política de alocação de memória do MINIX entre `worst_fit` e `first_fit`. Para isso, começamos tentando entender como funcionavam esses diferentes algoritmos de alocação, lendo assim as referências sobre eles no livro do MINIX. Assim, vimos que o `first_fit` aloca a memória sempre no primeiro espaço de tamanho suficiente, enquanto o `worst_fit` percorre toda a memória, e aloca sempre na maior lacuna possível.
+
+​	Tendo entendido o funcionamento dos algoritmos, começamos a criar a nossa nova system call `memalloc()`. Para isso, utilizamos o tutorial disponibilizado pelos monitores no EP2 da matéria, portanto, não detalharemos o processo para criá-la, já que isso já foi feito no EP passado. Essa nova chamada será responsável para informar ao sistema qual método de alocação de memória deve ser usado, ou seja, criamos uma variável pública `int mode` em um novo arquivo header `alloc.h`, que adicionamos exclusivamente para ela em `usr/src/servers/pm`, essa recebe um inteiro e será responsável por armazenar qual algoritmo de alocação deve ser usado, **0** caso seja desejado o `first_fit` e **1** caso `worst_fit`.
+
+​	Com a chamada de sistema pronta, nosso próximo passo foi alterar o código da função `alloc_mem()` no arquivo `alloc.c` em `usr/src/servers/pm`. Ela é a principal responsável pela alocação de memória no MINIX e recebe como parâmetro o tamanho do espaço desejado para ser alocado, e realiza por padrão o `first_fit`. Tendo isso em mente, percebemos que era simples adicionar o `worst_fit` como opção, isso já que, o código para alocar a memória em si seria praticamente o mesmo, a única mudança seria na escolha da lacuna.
+
+​	Logo, adicionamos uma condição que checa o valor de `mode`, caso o método desejado seja o `first_fit`, o MINIX realiza seu código padrão, caso seja o `worst_fit` ele percorre toda a memória em busca da maior lacuna, e quando é encontrada roda exatamente o mesmo código de alocação, mas recebendo como ponteiro o maior buraco ao invés do primeiro.
+
+#### Segunda parte:
+
+
+
+​	
