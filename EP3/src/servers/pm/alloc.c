@@ -73,7 +73,6 @@ phys_clicks clicks;		/* amount of memory requested */
  */
   register struct hole *hp, *prev_ptr, *maiorlacuna;
   phys_clicks old_base;
-
   do {
         prev_ptr = NIL_HOLE;
 	hp = hole_head;
