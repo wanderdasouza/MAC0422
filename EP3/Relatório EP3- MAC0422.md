@@ -16,6 +16,8 @@
 
 ​	Logo, adicionamos uma condição que checa o valor de `mode`, caso o método desejado seja o `first_fit`, o MINIX realiza seu código padrão, caso seja o `worst_fit` ele percorre toda a memória em busca da maior lacuna, e quando é encontrada roda exatamente o mesmo código de alocação, mas recebendo como ponteiro o maior buraco ao invés do primeiro.
 
+​	Para verificar o `effective UID` do usuário que realizou a chamada, usamos da chamada `geteuid()` da biblioteca `unistd.h` no arquivo `/usr/src/lib/posix/_memalloc.c` e passamos seu retorno por message para a misc.c no pm, que apenas termina a `system_call` caso o valor recebido seja 0, ou seja, caso o usuário seja o root.
+
 #### Segunda parte:
 
 

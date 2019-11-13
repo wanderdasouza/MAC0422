@@ -33,13 +33,16 @@
  *===========================================================================*/
 PUBLIC void do_memalloc()
 {
-  printf("Lendo o misc.c");
-  if (0 == 0){
-    printf("entrei no if garai");
+  int uid;
+  printf("Lendo o misc.c\n");
+  uid = m_in.m2_i2;
+  if (uid == 0){
     mode = m_in.m1_i1;
-    printf("peguei o mode e eh %d", mode);
+    printf("peguei o mode e eh %d\n", mode);
   }
-  else printf("Usuario nao eh root");
+  else{
+    printf("effective uid nao eh o do root, ele eh: %d", uid);
+  }
 }
 /*####################################*/
 
