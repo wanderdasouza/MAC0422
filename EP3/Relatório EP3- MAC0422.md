@@ -20,6 +20,12 @@
 
 #### Segunda parte:
 
+​	A segunda parte do EP consistia de implementar um utilitário para imprimir um mapa da memória e a memória livre no sistema, para isso, nos inspiramos fortemente no código do top, em `/usr/src/commands/simple/top.c`.
 
+​	Começamos com a implementação da parte mais simples, que era imprimir a quantidade de memória livre no sistema. Para isso, apenas adaptamos o código da função `print_memory()` do top.c, que já fazia isso de maneira muito prática e colocamos em nosso arquivo. 
 
-​	
+​	Após isso, começamos a montar nossa função `print_table`, que seria a responsável por imprimir o mapa da memória como desejado. Nela, percorremos a process table do minix e para cada processo, pegamos seu `pid`, posição do `.text` e `.stack` e por fim o tamanho da `.stack`. Isso já que, a posição do `.text` na memória será também a posição de início do processo, e a soma da posição da `.stack` com seu tamanho será sua posição final, como pode ser visto na imagem abaixo:
+
+![](/home/tst/Imagens/Captura de tela de 2019-11-13 22-13-41.png)
+
+​	Logo, tendo esses valores e o `pid` de cada processo, bastava imprimir os resultados separados por `\t` que teríamos a tabela desejada.
